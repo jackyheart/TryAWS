@@ -7,17 +7,18 @@ import com.amazonaws.mobile.client.AWSMobileClient
 import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager
 import android.media.MediaSyncEvent.createEvent
+import com.amazonaws.auth.AWSCredentials
+import com.amazonaws.auth.AWSCredentialsProvider
+import com.amazonaws.auth.CognitoCachingCredentialsProvider
 import com.amazonaws.mobile.auth.ui.SignInUI
 import com.amazonaws.mobile.client.AWSStartupHandler
 import com.amazonaws.mobile.client.AWSStartupResult
 import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsEvent
 import com.amazonaws.mobileconnectors.pinpoint.analytics.monetization.AmazonMonetizationEventBuilder
 import com.amazonaws.mobile.auth.ui.AuthUIConfiguration
-
-
-
-
-
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.rekognition.AmazonRekognition
+import com.amazonaws.services.rekognition.AmazonRekognitionClient
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 //        logMonetizationEvent()
 
         //Sign In
+        /*
         AWSMobileClient.getInstance().initialize(this) {
 
             val config = AuthUIConfiguration.Builder()
@@ -63,6 +65,20 @@ class MainActivity : AppCompatActivity() {
             val signIn = AWSMobileClient.getInstance().getClient(this, SignInUI::class.java) as SignInUI
             signIn.login(this, NextActivity::class.java).authUIConfiguration(config).execute()
         }.execute()
+        */
+
+        val photo = "photo.jpg"
+        val bucket = "S3bucket"
+
+        var credentialsProvider:AWSCredentialsProvider? = null
+
+        try {
+            credentialsProvider = CognitoCachingCredentialsProvider(applicationContext, "", Regions.CN_NORTH_1)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        //val client: AmazonRekognition = AmazonRekognitionClientBuilder.
     }
 
     fun logEvent() {
